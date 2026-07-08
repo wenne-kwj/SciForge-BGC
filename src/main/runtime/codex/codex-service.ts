@@ -73,6 +73,7 @@ import type { WriteAssistMcpLaunchConfig } from '../../write-assist-mcp-config'
 import type { RuntimeInspectorMcpLaunchConfig } from '../../runtime-inspector-mcp-config'
 import type { ScientificSkillsMcpLaunchConfig } from '../../scientific-skills-mcp-config'
 import type { ScientificPlottingMcpLaunchConfig } from '../../scientific-plotting-mcp-config'
+import type { BgcDiscoveryMcpLaunchConfig } from '../../bgc-discovery-mcp-config'
 import type { ImageGenerationMcpLaunchConfig } from '../../image-generation-mcp-config'
 import type { PptMasterMcpLaunchConfig } from '../../ppt-master-mcp-config'
 import type { SciforgeCanvasMcpLaunchConfig } from '../../sciforge-canvas-mcp-config'
@@ -125,6 +126,7 @@ export type CodexRuntimeServiceOptions = {
   runtimeInspectorMcpLaunch?: RuntimeInspectorMcpLaunchConfig
   scientificSkillsMcpLaunch?: ScientificSkillsMcpLaunchConfig
   scientificPlottingMcpLaunch?: ScientificPlottingMcpLaunchConfig
+  bgcDiscoveryMcpLaunch?: BgcDiscoveryMcpLaunchConfig
   imageGenerationMcpLaunch?: ImageGenerationMcpLaunchConfig
   pptMasterMcpLaunch?: PptMasterMcpLaunchConfig
   sciforgeCanvasMcpLaunch?: SciforgeCanvasMcpLaunchConfig
@@ -902,6 +904,7 @@ export class CodexRuntimeService {
         runtimeInspectorMcpLaunch: this.options.runtimeInspectorMcpLaunch,
         scientificSkillsMcpLaunch: this.options.scientificSkillsMcpLaunch,
         scientificPlottingMcpLaunch: this.options.scientificPlottingMcpLaunch,
+        bgcDiscoveryMcpLaunch: this.options.bgcDiscoveryMcpLaunch,
         imageGenerationMcpLaunch: this.options.imageGenerationMcpLaunch,
         pptMasterMcpLaunch: this.options.pptMasterMcpLaunch,
         sciforgeCanvasMcpLaunch: this.options.sciforgeCanvasMcpLaunch
@@ -968,6 +971,7 @@ export class CodexRuntimeService {
       this.options.researchMcpLaunch ||
       this.options.scientificSkillsMcpLaunch ||
       this.options.scientificPlottingMcpLaunch ||
+      this.options.bgcDiscoveryMcpLaunch ||
       this.options.imageGenerationMcpLaunch ||
       this.options.pptMasterMcpLaunch ||
       this.options.sciforgeCanvasMcpLaunch ||
@@ -2497,6 +2501,9 @@ function codexDynamicMcpServers(
       : undefined,
     scientificPlottingMcp: options.scientificPlottingMcpLaunch && settings
       ? { settings, launch: options.scientificPlottingMcpLaunch }
+      : undefined,
+    bgcDiscoveryMcp: options.bgcDiscoveryMcpLaunch && settings
+      ? { settings, launch: options.bgcDiscoveryMcpLaunch }
       : undefined,
     imageGenerationMcp: options.imageGenerationMcpLaunch && settings
       ? { settings, launch: options.imageGenerationMcpLaunch }

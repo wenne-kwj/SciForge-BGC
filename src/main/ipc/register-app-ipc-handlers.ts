@@ -151,6 +151,10 @@ import {
   type ScientificPlottingMcpLaunchConfig
 } from '../scientific-plotting-mcp-config'
 import {
+  buildBgcDiscoveryMcpConfigFragment,
+  type BgcDiscoveryMcpLaunchConfig
+} from '../bgc-discovery-mcp-config'
+import {
   buildImageGenerationMcpConfigFragment,
   type ImageGenerationMcpLaunchConfig
 } from '../image-generation-mcp-config'
@@ -413,6 +417,7 @@ type RegisterAppIpcHandlersOptions = {
   terminalPtyBridge?: TerminalPtyBridge
   getScientificSkillsMcpLaunchConfig?: () => ScientificSkillsMcpLaunchConfig
   getScientificPlottingMcpLaunchConfig?: () => ScientificPlottingMcpLaunchConfig
+  getBgcDiscoveryMcpLaunchConfig?: () => BgcDiscoveryMcpLaunchConfig
   getImageGenerationMcpLaunchConfig?: () => ImageGenerationMcpLaunchConfig
   getSciforgeCanvasMcpLaunchConfig?: () => SciforgeCanvasMcpLaunchConfig
   getPptMasterMcpLaunchConfig?: () => PptMasterMcpLaunchConfig
@@ -819,6 +824,7 @@ export function registerAppIpcHandlers(options: RegisterAppIpcHandlersOptions): 
     terminalPtyBridge,
     getScientificSkillsMcpLaunchConfig,
     getScientificPlottingMcpLaunchConfig,
+    getBgcDiscoveryMcpLaunchConfig,
     getImageGenerationMcpLaunchConfig,
     getSciforgeCanvasMcpLaunchConfig,
     getPptMasterMcpLaunchConfig,
@@ -1846,6 +1852,30 @@ export function registerAppIpcHandlers(options: RegisterAppIpcHandlersOptions): 
       return {
         ok: true as const,
         config: buildScientificPlottingMcpConfigFragment(launch, request.workspaceRoot)
+      }
+    } catch (error) {
+      return {
+        ok: false as const,
+        message: error instanceof Error ? error.message : String(error)
+      }
+    }
+  })
+
+  handleInvoke('mcp:bgc-discovery-config', async (_, payload: unknown) => {
+    const request = parseIpcPayload(
+      'mcp:bgc-discovery-config',
+      scientificPlottingMcpConfigPayloadSchema,
+      payload
+    )
+    try {
+      const launch = getBgcDiscoveryMcpLaunchConfig?.() ?? {
+        appPath: app.getAppPath(),
+        execPath: process.execPath,
+        isPackaged: app.isPackaged
+      }
+      return {
+        ok: true as const,
+        config: buildBgcDiscoveryMcpConfigFragment(launch, request.workspaceRoot)
       }
     } catch (error) {
       return {

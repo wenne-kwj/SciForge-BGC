@@ -114,6 +114,7 @@ import type { WriteAssistMcpLaunchConfig } from './write-assist-mcp-config'
 import type { RuntimeInspectorMcpLaunchConfig } from './runtime-inspector-mcp-config'
 import type { ScientificSkillsMcpLaunchConfig } from './scientific-skills-mcp-config'
 import type { ScientificPlottingMcpLaunchConfig } from './scientific-plotting-mcp-config'
+import type { BgcDiscoveryMcpLaunchConfig } from './bgc-discovery-mcp-config'
 import {
   imageGenerationMcpSettingsChanged,
   type ImageGenerationMcpLaunchConfig
@@ -266,6 +267,14 @@ function getScientificSkillsMcpLaunchConfig(): ScientificSkillsMcpLaunchConfig {
 }
 
 function getScientificPlottingMcpLaunchConfig(): ScientificPlottingMcpLaunchConfig {
+  return {
+    appPath: app.getAppPath(),
+    execPath: process.execPath,
+    isPackaged: app.isPackaged
+  }
+}
+
+function getBgcDiscoveryMcpLaunchConfig(): BgcDiscoveryMcpLaunchConfig {
   return {
     appPath: app.getAppPath(),
     execPath: process.execPath,
@@ -469,6 +478,7 @@ function getCodexRuntime(): CodexRuntimeService {
     runtimeInspectorMcpLaunch: getRuntimeInspectorMcpLaunchConfig(),
     scientificSkillsMcpLaunch: getScientificSkillsMcpLaunchConfig(),
     scientificPlottingMcpLaunch: getScientificPlottingMcpLaunchConfig(),
+    bgcDiscoveryMcpLaunch: getBgcDiscoveryMcpLaunchConfig(),
     imageGenerationMcpLaunch: getImageGenerationMcpLaunchConfig(),
     pptMasterMcpLaunch: getPptMasterMcpLaunchConfig(),
     sciforgeCanvasMcpLaunch: getSciforgeCanvasMcpLaunchConfig()
@@ -1989,6 +1999,7 @@ app.whenReady().then(async () => {
     },
     getScientificSkillsMcpLaunchConfig,
     getScientificPlottingMcpLaunchConfig,
+    getBgcDiscoveryMcpLaunchConfig,
     getImageGenerationMcpLaunchConfig,
     getPptMasterMcpLaunchConfig,
     getSciforgeCanvasMcpLaunchConfig
